@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "547488792153",
+    "firebase_url": "https://notifymi-78646.firebaseio.com",
+    "project_id": "notifymi-78646",
+    "storage_bucket": "notifymi-78646.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547488792153:android:c407865b0d5ba547",
+        "android_client_info": {
+          "package_name": "com.calgaryhacks.calvin.hackathon2019"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "547488792153-oisla7rro68cjp87jcb1avcchv0paha9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATqfykp7rxgz7-8xL0vcdmyuSmhsLg_hM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
