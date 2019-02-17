@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
@@ -34,6 +35,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
     private DatabaseReference base_database_reference = FirebaseDatabase.getInstance().getReference();
     private double my_lat;
     private double my_lon;
+    private static DecimalFormat df3 = new DecimalFormat(".###");
 
     public ReportAdapter(){}
 
@@ -64,7 +66,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
         }
 
         //set the row's text fields
-        holder.info1.setText(holder.info1.getText());
+        holder.info1.setText(holder.info1.getText()+", "+df3.format(distance_list.get(i)/1000)+"km");
         //holder.info2.setText(current.getSecondary()+", "+Double.toString(current.getDistance()/1000)+"km");
 
         //make the row clickable -> if user click, take them to Google Maps and display a pin on the location of the report
@@ -138,7 +140,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
                                         notifyDataSetChanged();
                                         break;
                                     }
-                                    if(distance_list.get(i) <= dist){
+                                    if(distance_list.get(i) >= dist){
                                         report_list.add(i, current);
                                         distance_list.add(i, dist);
                                         notifyDataSetChanged();

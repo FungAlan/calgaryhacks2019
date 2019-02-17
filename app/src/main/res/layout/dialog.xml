@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_backround"
+    android:padding='5dp'>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:elevation="2dp"
+        android:ems="10"
+        android:text="1. Press hold your home button or just say 'Okay Google.'\n2. Say 'Calgary Report.'\n3. Report your problem.\n4. Open this app to see what other people reported nearby."
+        android:lines="6"
+        android:textSize="15dp"
+        android:gravity="left"
+        android:lineSpacingExtra="2dp"/>
+
+    <LinearLayout
+        android:id="@+id/dialog_image_limit_button_layer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/dialog_dismiss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/dialog_button"
+            android:text="Dismiss"
+            android:layout_margin="5dp"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
+
+</LinearLayout>

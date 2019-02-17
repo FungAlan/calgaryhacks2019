@@ -1,6 +1,7 @@
 package com.calgaryhacks.calvin.hackathon2019;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +26,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private double my_lat;
     private FusedLocationProviderClient client;
     private RecyclerView recycler_view;
+    private ImageButton help;
 
     //TODO: notifications+counting in the background
     
@@ -54,6 +58,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar);
+        View view = getSupportActionBar().getCustomView();
+        help = view.findViewById(R.id.bar_help);
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog info_dialog = new Dialog(MainActivity.this);
+                info_dialog.setContentView(R.layout.dialog);
+                Button cancel = info_dialog.findViewById(R.id.dialog_dismiss);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        info_dialog.cancel();
+                    }
+                });
+                info_dialog.show();
+            }
+        });
 
 //        BottomNavigationView navigationView = findViewById(R.id.navigationView);
 //        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
