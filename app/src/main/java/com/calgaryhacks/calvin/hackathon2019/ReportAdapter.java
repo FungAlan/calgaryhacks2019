@@ -55,6 +55,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
     @Override
     public void onBindViewHolder(@NonNull ReportViewHolder holder, int i) {
         final Report current = report_list.get(i);
+        holder.setIsRecyclable(false);
 
         //set the row's icon
         switch(current.getType()){
@@ -67,7 +68,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
 
         //set the row's text fields
         holder.info1.setText(holder.info1.getText()+", "+df3.format(distance_list.get(i)/1000)+"km");
-        //holder.info2.setText(current.getSecondary()+", "+Double.toString(current.getDistance()/1000)+"km");
+
 
         //make the row clickable -> if user click, take them to Google Maps and display a pin on the location of the report
         holder.clickable.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +115,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
         my_lon = lon;
         report_list = new ArrayList<Report>();
         distance_list = new ArrayList<Double>();
+
         base_database_reference.child("reports").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -123,15 +125,25 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
                         //Log.d("loctest", "mine: "+my_lon+" "+my_lat);
                         //Log.d("loctest", "theirs: "+current.getLon()+" "+current.getLat());
                         double dist = calculateDistance(current);
-                        //Log.d("loctest", "distance: "+ Double.toString(dist));
+                        Log.d("loctest", "distance: "+ Double.toString(dist));
 
                         //to see the Report it has to be within this radius
                         if(dist < 20) {
                             //add the element such that we keep an ascending order (distance)
-                            if(report_list.size() < 1){
+                            if(report_list.size() < 1) {
                                 report_list.add(current);
                                 distance_list.add(dist);
                                 notifyDataSetChanged();
+                            }else if(report_list.size() == 1){
+                                if(distance_list.get(0) >=dist){
+                                    report_list.add(0,current);
+                                    distance_list.add(0,dist);
+                                    notifyDataSetChanged();
+                                }else{
+                                    report_list.add(current);
+                                    distance_list.add(dist);
+                                    notifyDataSetChanged();
+                                }
                             }else{
                                 for(int i = 0; i<report_list.size(); i++){
                                     if(i == report_list.size()-1){

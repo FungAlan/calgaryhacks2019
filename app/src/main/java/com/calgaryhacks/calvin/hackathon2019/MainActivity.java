@@ -53,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
     private FusedLocationProviderClient client;
     private RecyclerView recycler_view;
     private ImageButton help;
-
-    //TODO: notifications+counting in the background
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             msg = "Failed.";
                         }
-                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
 
