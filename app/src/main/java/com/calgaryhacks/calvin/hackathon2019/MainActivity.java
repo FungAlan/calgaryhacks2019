@@ -16,6 +16,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +34,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.Serializable;
 import java.util.Timer;
@@ -78,6 +80,24 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("MyNotifications", "MyNotifications", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
+        FirebaseMessaging.getInstance().subscribeToTopic("general")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Successful.";
+                        if (!task.isSuccessful()) {
+                            msg = "Failed.";
+                        }
+                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
         //declare all the necessary variables
         adapter = new ReportAdapter(getApplicationContext());
         client = LocationServices.getFusedLocationProviderClient(this);
@@ -91,8 +111,8 @@ public class MainActivity extends AppCompatActivity {
         TimerTask t = new TimerTask() {
             @Override
             public void run() {
-                if(ActivityCompat.checkSelfPermission(MainActivity.this, ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(getApplicationContext(), "NOT Getting Location", Toast.LENGTH_SHORT).show();
+                if(ActivityCompat.checkSelfPermission(MainActivity.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                    //Toast.makeText(getApplicationContext(), "NOT Getting Location", Toast.LENGTH_SHORT).show();
                     requestPermission();
                     return;
                 }
